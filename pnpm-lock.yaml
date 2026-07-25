@@ -7,6 +7,18 @@ settings:
 importers:
 
   .:
+    devDependencies:
+      oxfmt:
+        specifier: ^0.56.0
+        version: 0.56.0
+      oxlint:
+        specifier: ^1.71.0
+        version: 1.75.0
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
+  base:
     dependencies:
       '@ai-sdk/react':
         specifier: ^4.0.40
@@ -72,6 +84,18 @@ importers:
       wrangler:
         specifier: ^4.105.0
         version: 4.114.0(@cloudflare/workers-types@4.20260702.1)
+
+  packages/nexp:
+    devDependencies:
+      oxfmt:
+        specifier: ^0.56.0
+        version: 0.56.0
+      oxlint:
+        specifier: ^1.71.0
+        version: 1.75.0
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
 
 packages:
 

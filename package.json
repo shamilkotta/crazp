@@ -1,6 +1,5 @@
 {
-  "name": "nexp",
-  "description": "Headless Project Think personal agent on Cloudflare Workers",
+  "name": "nexp-workspace",
   "private": true,
   "type": "module",
   "version": "0.0.0",
@@ -14,40 +13,20 @@
     ]
   },
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "deploy": "vite build && wrangler deploy",
-    "types": "think types --all",
+    "dev": "pnpm --filter @nexp/base dev",
+    "build": "pnpm --filter @nexp/base build",
+    "deploy": "pnpm --filter @nexp/base deploy",
+    "chat": "pnpm --filter @nexp/base chat",
+    "types": "pnpm --filter @nexp/base types",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "lint": "oxlint .",
-    "typecheck": "tsc --noEmit",
-    "chat": "node scripts/chat.mjs",
+    "typecheck": "pnpm -r typecheck",
     "check": "pnpm run format:check && pnpm run lint && pnpm run typecheck"
   },
-  "dependencies": {
-    "@ai-sdk/react": "^4.0.40",
-    "@cloudflare/codemode": "latest",
-    "@cloudflare/sandbox": "^0.12.4",
-    "@cloudflare/shell": "latest",
-    "@cloudflare/think": "latest",
-    "@cloudflare/worker-bundler": "^0.2.2",
-    "agents": "latest",
-    "ai": "^7.0.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "zod": "^4.4.3"
-  },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.42.3",
-    "@cloudflare/workers-types": "^4.20260629.1",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.4",
     "oxfmt": "^0.56.0",
     "oxlint": "^1.71.0",
-    "typescript": "^6.0.3",
-    "vite": "^8.1.0",
-    "wrangler": "^4.105.0"
+    "typescript": "^6.0.3"
   }
 }

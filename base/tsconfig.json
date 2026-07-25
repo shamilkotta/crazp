@@ -1,0 +1,12 @@
+{
+  "extends": "./node_modules/agents/agents.tsconfig.json",
+  "include": [
+    "agents",
+    "src",
+    "skills",
+    "think.d.ts",
+    "env.d.ts",
+    "vite.config.ts",
+    "index.html"
+  ]
+}
