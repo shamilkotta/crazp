@@ -1,6 +1,5 @@
 import type { ActivePlan } from "./tools/todo-write";
-
-export const ACTIVE_PLAN_KEY = "active_plan";
+export { ACTIVE_PLAN_KEY } from "./active-plan";
 
 const STATUS_GLYPH: Record<
   "completed" | "in_progress" | "cancelled" | "pending",

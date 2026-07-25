@@ -145,7 +145,7 @@ export function isAgentManagedPath(path: string): boolean {
 
 const SANDBOX_SYNC_EXCLUDED_PREFIXES = ["identity/", "skills/"] as const;
 
-function normalizeWorkspacePath(path: string): string {
+export function normalizeWorkspacePath(path: string): string {
   return path.replace(/^\/+/, "");
 }
 

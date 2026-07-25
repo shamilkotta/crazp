@@ -20,11 +20,8 @@ import {
   type CoreFileRecord
 } from "../../src/agent/core-files";
 import { workspaceContextProvider } from "../../src/agent/context-providers";
-import {
-  ACTIVE_PLAN_KEY,
-  buildTurnSections,
-  PREAMBLE
-} from "../../src/agent/preamble";
+import { buildTurnSections, PREAMBLE } from "../../src/agent/preamble";
+import { ACTIVE_PLAN_KEY, setActivePlan } from "../../src/agent/active-plan";
 import { listWorkspaceSkills } from "../../src/agent/skills-list";
 import { buildExecutionTools } from "../../src/agent/execution-tools";
 import type { ActivePlan } from "../../src/agent/tools/todo-write";
@@ -106,7 +103,7 @@ export class NexpAgent extends Think<Cloudflare.Env> {
         agentName: this.name,
         env: this.env,
         getWorkspace: () => this.workspace,
-        setActivePlan: (plan) => this.#setActivePlan(plan),
+        setActivePlan: (plan) => setActivePlan(this.ctx.storage, plan),
         extensions: true,
         extensionManager: this.extensionManager
       }),
@@ -144,11 +141,6 @@ Pass a self contained brief. Use each worker's returned summary in your reply to
     return {
       system: `${ctx.system}\n\n${extra}`.trim()
     };
-  }
-
-  async #setActivePlan(plan: ActivePlan | null): Promise<void> {
-    if (plan == null) await this.ctx.storage.delete(ACTIVE_PLAN_KEY);
-    else await this.ctx.storage.put(ACTIVE_PLAN_KEY, plan);
   }
 
   #bootstrapInit?: Promise<void>;

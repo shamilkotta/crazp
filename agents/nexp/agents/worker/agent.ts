@@ -3,10 +3,8 @@ import { Workspace } from "@cloudflare/shell";
 import type { Session } from "agents/experimental/memory/session";
 import type { ToolSet, UIMessage } from "ai";
 
+import { setActivePlan } from "../../../../src/agent/active-plan";
 import { buildExecutionTools } from "../../../../src/agent/execution-tools";
-import type { ActivePlan } from "../../../../src/agent/tools/todo-write";
-
-const ACTIVE_PLAN_KEY = "active_plan";
 
 const WORKER_PROMPT = `You are a generic delegate worker for the parent agent. You are not a specialized role — the same worker handles any task the parent assigns (research, coding, planning, drafts, etc.). You have no chat history beyond the brief in the user message.
 
@@ -59,12 +57,7 @@ export class NexpWorker extends Think<Cloudflare.Env> {
       agentName: this.name,
       env: this.env,
       getWorkspace: () => this.workspace,
-      setActivePlan: (plan) => this.#setActivePlan(plan)
+      setActivePlan: (plan) => setActivePlan(this.ctx.storage, plan)
     });
-  }
-
-  async #setActivePlan(plan: ActivePlan | null): Promise<void> {
-    if (plan == null) await this.ctx.storage.delete(ACTIVE_PLAN_KEY);
-    else await this.ctx.storage.put(ACTIVE_PLAN_KEY, plan);
   }
 }

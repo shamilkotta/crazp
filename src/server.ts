@@ -1,6 +1,7 @@
 import { handleBootstrapRequest } from "./handlers/bootstrap";
 import { handleFilesRequest } from "./handlers/files";
 import { handleSkillsRequest } from "./handlers/skills";
+import { json } from "./http";
 
 async function handleApiRequest(
   request: Request,
@@ -21,10 +22,7 @@ async function handleApiRequest(
     return new Response("ok");
   }
 
-  return new Response(JSON.stringify({ error: "Not found" }), {
-    status: 404,
-    headers: { "content-type": "application/json" }
-  });
+  return json({ error: "Not found" }, 404);
 }
 
 export default {

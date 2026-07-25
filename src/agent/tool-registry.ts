@@ -97,6 +97,8 @@ function createMoveTool({ getWorkspace }: { getWorkspace: () => Workspace }) {
       recursive: z.boolean().optional()
     }),
     execute: async ({ from, to, recursive }) => {
+      assertNotCorePath(from);
+      assertNotCorePath(to);
       await getWorkspace().mv(from, to, { recursive: recursive ?? false });
       return { from, to };
     }

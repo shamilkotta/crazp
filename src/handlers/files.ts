@@ -1,16 +1,11 @@
 import { z } from "zod";
 
+import { json } from "../http";
 import { getNexpAgentStub } from "../lib/agent-stub";
-
-const JSON_HEADERS = { "content-type": "application/json" };
 
 const WriteRequestBodySchema = z.object({
   content: z.string()
 });
-
-function json(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), { status, headers: JSON_HEADERS });
-}
 
 async function parseWriteBody(
   request: Request
