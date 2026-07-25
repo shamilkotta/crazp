@@ -28,13 +28,15 @@
   "dependencies": {
     "@ai-sdk/react": "^4.0.40",
     "@cloudflare/codemode": "latest",
+    "@cloudflare/sandbox": "^0.12.4",
     "@cloudflare/shell": "latest",
     "@cloudflare/think": "latest",
+    "@cloudflare/worker-bundler": "^0.2.2",
     "agents": "latest",
-    "ai": "^6.0.202",
+    "ai": "^7.0.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "zod": "^3.25.76"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.42.3",

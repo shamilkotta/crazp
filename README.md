@@ -8,7 +8,9 @@ No UI, no Alchemy — deploy with Wrangler only.
 
 - **Identity & memory** — writable context blocks backed by `identity/*.md` in R2; the agent updates them continuously as it learns
 - **Skills** — bundled + workspace skills via `getSkills()` (`activate_skill`, `read_skill_resource`)
-- **Web research** — Cloudflare Browser Run tools + `execute` (codemode)
+- **Web research** — Cloudflare Browser Run tools + `execute` / `execute_bundle` (codemode)
+- **Execution ladder** — Tier 0 workspace → Tier 1 `execute` → Tier 2 `execute_bundle` (npm) → Tier 3 browser → Tier 4 OS sandbox (`sandbox_*`)
+- **Extensions** — `load_extension` / `list_extensions` for self-authored sandboxed tools
 - **Smart delegation** — parent model calls the `worker` agent tool when a task is too heavy for one turn; one generic worker, not task-type sub-agents
 - **Headless API** — REST for core files, skills catalog, bootstrap
 - **CLI chat** — WebSocket client via `pnpm chat`
@@ -17,7 +19,8 @@ No UI, no Alchemy — deploy with Wrangler only.
 
 - Node.js 18+
 - pnpm
-- Cloudflare account with Workers AI, R2, Browser Rendering, and Durable Objects enabled
+- Cloudflare account with Workers AI, R2, Browser Rendering, Durable Objects, Worker Loaders, and **Containers** (for sandbox) enabled
+- Docker running locally for sandbox container builds during `pnpm dev` / deploy
 
 ## Setup
 
@@ -79,10 +82,13 @@ agents/nexp/agent.ts              # NexpAgent (Think)
 agents/nexp/agents/worker/agent.ts # Generic worker sub-agent (agentTool)
 agents/nexp/skills/               # Bundled skills (agents:skills)
 src/server.ts                     # REST API (Think entry fallthrough)
-src/agent/                        # Core logic
+src/agent/execution-tools.ts      # Execution ladder tool builder
+src/agent/tools/sandbox.ts        # Tier 4 sandbox tools
+src/agent/tools/execute-bundle.ts # Tier 2 npm execution
+src/worker-entry.ts               # Worker entry (Think + Sandbox export)
 scripts/chat.mjs                  # Terminal chat client
 ```
 
 ## Bindings
 
-See [wrangler.jsonc](./wrangler.jsonc): `AI`, `WORKSPACE_BUCKET` (R2), `BROWSER`, `LOADER`, `ThinkAgent_Nexp`.
+See [wrangler.jsonc](./wrangler.jsonc): `AI`, `WORKSPACE_BUCKET` (R2), `BROWSER`, `LOADER`, `SANDBOX` (container), `ThinkAgent_Nexp`.

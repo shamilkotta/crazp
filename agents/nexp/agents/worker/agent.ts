@@ -1,11 +1,9 @@
 import { Think } from "@cloudflare/think";
-import { createBrowserTools } from "@cloudflare/think/tools/browser";
-import { createExecuteTool } from "@cloudflare/think/tools/execute";
 import { Workspace } from "@cloudflare/shell";
 import type { Session } from "agents/experimental/memory/session";
 import type { ToolSet, UIMessage } from "ai";
 
-import { buildSharedToolSet } from "../../../../src/agent/tool-registry";
+import { buildExecutionTools } from "../../../../src/agent/execution-tools";
 import type { ActivePlan } from "../../../../src/agent/tools/todo-write";
 
 const ACTIVE_PLAN_KEY = "active_plan";
@@ -55,19 +53,14 @@ export class NexpWorker extends Think<Cloudflare.Env> {
   }
 
   override getTools(): ToolSet {
-    const browserTools = createBrowserTools({
+    return buildExecutionTools({
+      executeAgent: this,
       ctx: this.ctx,
-      browser: this.env.BROWSER,
-      loader: this.env.LOADER
+      agentName: this.name,
+      env: this.env,
+      getWorkspace: () => this.workspace,
+      setActivePlan: (plan) => this.#setActivePlan(plan)
     });
-    return {
-      ...browserTools,
-      execute: createExecuteTool(this),
-      ...buildSharedToolSet({
-        getWorkspace: () => this.workspace,
-        setActivePlan: (plan) => this.#setActivePlan(plan)
-      })
-    };
   }
 
   async #setActivePlan(plan: ActivePlan | null): Promise<void> {

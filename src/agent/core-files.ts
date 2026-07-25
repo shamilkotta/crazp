@@ -143,6 +143,38 @@ export function isAgentManagedPath(path: string): boolean {
   return isCorePath(path) || isBootstrapPath(path);
 }
 
+const SANDBOX_SYNC_EXCLUDED_PREFIXES = ["identity/", "skills/"] as const;
+
+function normalizeWorkspacePath(path: string): string {
+  return path.replace(/^\/+/, "");
+}
+
+/** Paths that must never be copied into the Tier 4 OS sandbox. */
+export function isSandboxSyncExcludedPath(path: string): boolean {
+  const normalized = normalizeWorkspacePath(path);
+  if (isAgentManagedPath(normalized)) return true;
+  return SANDBOX_SYNC_EXCLUDED_PREFIXES.some(
+    (prefix) =>
+      normalized === prefix.slice(0, -1) || normalized.startsWith(prefix)
+  );
+}
+
+/** Allowed prefixes for sandbox_sync_workspace (default: workspace/). */
+export function assertSandboxSyncPrefixAllowed(prefix: string): string {
+  const normalized = normalizeWorkspacePath(prefix);
+  if (normalized.length === 0) {
+    throw new Error(
+      "sandbox_sync_workspace requires a non-empty prefix (default: workspace/). Full-workspace sync is not allowed."
+    );
+  }
+  if (isSandboxSyncExcludedPath(normalized)) {
+    throw new Error(
+      `sandbox_sync_workspace cannot sync "${normalized}" — identity/, skills/, and bootstrap paths are excluded. Use workspace/ instead.`
+    );
+  }
+  return normalized;
+}
+
 export function coreFileMeta(path: string): CoreFileMeta | null {
   return AGENT_CORE_FILES.find((f) => f.path === path) ?? null;
 }

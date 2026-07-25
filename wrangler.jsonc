@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "nexp",
-  "main": "virtual:think/entry",
+  "main": "src/worker-entry.ts",
   "compatibility_date": "2026-07-24",
   "compatibility_flags": ["nodejs_compat"],
   "ai": { "binding": "AI", "remote": true },
@@ -13,11 +13,23 @@
   ],
   "browser": { "binding": "BROWSER", "remote": true },
   "worker_loaders": [{ "binding": "LOADER" }],
+  "containers": [
+    {
+      "class_name": "Sandbox",
+      "image": "./node_modules/@cloudflare/sandbox/Dockerfile",
+      "instance_type": "lite",
+      "max_instances": 3
+    }
+  ],
   "durable_objects": {
     "bindings": [
       {
         "class_name": "ThinkAgent_Nexp",
         "name": "ThinkAgent_Nexp"
+      },
+      {
+        "class_name": "Sandbox",
+        "name": "SANDBOX"
       }
     ]
   },
@@ -29,6 +41,10 @@
     {
       "tag": "v2",
       "deleted_classes": ["ThinkAgent_NexpChild"]
+    },
+    {
+      "tag": "v3",
+      "new_sqlite_classes": ["Sandbox"]
     }
   ]
 }

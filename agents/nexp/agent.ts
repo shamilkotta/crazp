@@ -1,6 +1,4 @@
 import { Think, skills } from "@cloudflare/think";
-import { createBrowserTools } from "@cloudflare/think/tools/browser";
-import { createExecuteTool } from "@cloudflare/think/tools/execute";
 import { Workspace } from "@cloudflare/shell";
 import { agentTool } from "agents/agent-tools";
 import type { Session } from "agents/experimental/memory/session";
@@ -28,13 +26,15 @@ import {
   PREAMBLE
 } from "../../src/agent/preamble";
 import { listWorkspaceSkills } from "../../src/agent/skills-list";
-import { buildSharedToolSet } from "../../src/agent/tool-registry";
+import { buildExecutionTools } from "../../src/agent/execution-tools";
 import type { ActivePlan } from "../../src/agent/tools/todo-write";
 import { NexpWorker } from "./agents/worker/agent";
 
 const BOOTSTRAP_SEEDED_KEY = "nexp:bootstrap-seeded";
 
 export class NexpAgent extends Think<Cloudflare.Env> {
+  override extensionLoader = this.env.LOADER;
+
   override workspace = new Workspace({
     sql: this.ctx.storage.sql,
     r2: this.env.WORKSPACE_BUCKET,
@@ -52,7 +52,7 @@ export class NexpAgent extends Think<Cloudflare.Env> {
     const compactFn = createCompactFunction({
       summarize: async (prompt) => {
         const result = await generateText({
-          model: this.getModel(),
+          model: this.resolveModel(),
           prompt
         });
         return result.text;
@@ -99,25 +99,24 @@ export class NexpAgent extends Think<Cloudflare.Env> {
   }
 
   override getTools(): ToolSet {
-    const browserTools = createBrowserTools({
-      ctx: this.ctx,
-      browser: this.env.BROWSER,
-      loader: this.env.LOADER
-    });
     return {
-      ...browserTools,
-      execute: createExecuteTool(this),
-      ...buildSharedToolSet({
+      ...buildExecutionTools({
+        executeAgent: this,
+        ctx: this.ctx,
+        agentName: this.name,
+        env: this.env,
         getWorkspace: () => this.workspace,
-        setActivePlan: (plan) => this.#setActivePlan(plan)
+        setActivePlan: (plan) => this.#setActivePlan(plan),
+        extensions: true,
+        extensionManager: this.extensionManager
       }),
       worker: agentTool(NexpWorker, {
         displayName: "Worker",
         description: `Hand off heavy work to a generic worker (same tools, isolated context). You decide each turn — there are no specialized sub-agents for research, code, etc.
-
+You may call worker multiple times in parallel when subtasks are independent.
 Use when the task needs many tool calls, long browser/execute runs, or a large artifact. Stay inline for quick replies, 1–2 tool calls, and identity/memory updates.
 
-Pass a self-contained brief; the worker has no chat history. Use the worker's returned summary in your reply to the user.`,
+Pass a self contained brief. Use each worker's returned summary in your reply to the user.`,
         inputSchema: z.object({
           brief: z
             .string()
