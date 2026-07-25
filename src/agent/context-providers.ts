@@ -5,7 +5,8 @@ import { coreFileMeta, resolveCoreFile } from "./core-files";
 
 export function workspaceContextProvider(
   workspace: Workspace,
-  path: string
+  path: string,
+  onSet?: () => void | Promise<any>
 ): WritableContextProvider {
   const meta = coreFileMeta(path);
   if (!meta) {
@@ -18,6 +19,7 @@ export function workspaceContextProvider(
     },
     set: async (content) => {
       await workspace.writeFile(path, content);
+      await onSet?.();
     }
   };
 }

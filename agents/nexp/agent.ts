@@ -46,6 +46,8 @@ export class NexpAgent extends Think<Cloudflare.Env> {
   }
 
   override configureSession(session: Session) {
+    const identityProvider = (path: string) =>
+      workspaceContextProvider(this.workspace, path, () => session.refreshSystemPrompt());
     const compactFn = createCompactFunction({
       summarize: async (prompt) => {
         const result = await generateText({
@@ -62,25 +64,25 @@ export class NexpAgent extends Think<Cloudflare.Env> {
       .withContext("soul", {
         description:
           "Your character, values, and tone. refine over time as the relationship grows.",
-        provider: workspaceContextProvider(this.workspace, SOUL_PATH),
+        provider: identityProvider(SOUL_PATH),
         maxTokens: 2000
       })
       .withContext("identity", {
         description:
           "Your name and sense of self as a general purpose collaborator — update when it evolves.",
-        provider: workspaceContextProvider(this.workspace, IDENTITY_PATH),
+        provider: identityProvider(IDENTITY_PATH),
         maxTokens: 1500
       })
       .withContext("memory", {
         description:
           "Living memory: facts, decisions, and lessons — append and prune continuously.",
-        provider: workspaceContextProvider(this.workspace, MEMORY_PATH),
+        provider: identityProvider(MEMORY_PATH),
         maxTokens: 4000
       })
       .withContext("user", {
         description:
           "Who you work with and how they like to collaborate — keep current as you learn.",
-        provider: workspaceContextProvider(this.workspace, USER_PATH),
+        provider: identityProvider(USER_PATH),
         maxTokens: 2000
       })
       .onCompaction(compactFn)
@@ -104,6 +106,9 @@ export class NexpAgent extends Think<Cloudflare.Env> {
         env: this.env,
         getWorkspace: () => this.workspace,
         setActivePlan: (plan) => setActivePlan(this.ctx.storage, plan),
+        onIdentityFileChanged: async () => {
+          await this.session.refreshSystemPrompt();
+        },
         extensions: true,
         extensionManager: this.extensionManager
       }),
@@ -196,6 +201,7 @@ Pass a self contained brief. Use each worker's returned summary in your reply to
     const meta = coreFileMeta(path);
     if (!meta) throw new Error("Path is not a core identity file");
     await this.workspace.writeFile(path, content);
+    await this.session.refreshSystemPrompt();
   }
 
   async listAgentSkills() {

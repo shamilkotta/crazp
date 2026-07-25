@@ -21,6 +21,7 @@ export type BuildExecutionToolsOptions = {
   env: Cloudflare.Env;
   getWorkspace: () => Workspace;
   setActivePlan: (plan: ActivePlan | null) => Promise<void>;
+  onIdentityFileChanged?: () => Promise<void>;
   /** Include load_extension / list_extensions and loaded extension tools */
   extensions?: boolean;
   extensionManager?: ExtensionManager;
@@ -44,6 +45,7 @@ export function buildExecutionTools(
     env,
     getWorkspace,
     setActivePlan,
+    onIdentityFileChanged,
     extensions = false,
     extensionManager
   } = options;
@@ -57,7 +59,7 @@ export function buildExecutionTools(
     ...browserTools,
     execute: createExecuteTool(executeAgent),
     execute_bundle: createExecuteBundleTool(env.LOADER),
-    ...buildSharedToolSet({ getWorkspace, setActivePlan }),
+    ...buildSharedToolSet({ getWorkspace, setActivePlan, onIdentityFileChanged }),
     // ...createThinkSandboxTools(env.SANDBOX), NOT IMPLEMENTED YET, SO USING CUSTOM TOOL BELOW
     ...createSandboxTools({
       sandbox: env.SANDBOX,

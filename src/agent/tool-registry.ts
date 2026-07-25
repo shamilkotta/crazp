@@ -8,12 +8,12 @@ import { tool } from "ai";
 import type { ToolSet } from "ai";
 import { z } from "zod";
 
-import { isCorePath } from "./core-files";
+import { isCorePath, normalizeWorkspacePath } from "./core-files";
 import type { ActivePlan } from "./tools/todo-write";
 import { createTodoWriteTool } from "./tools/todo-write";
 
 function assertNotCorePath(path: string): void {
-  const normalized = path.replace(/^\/+/, "");
+  const normalized = normalizeWorkspacePath(path);
   if (isCorePath(normalized)) {
     throw new Error(
       "Use set_context or identity file tools for core identity paths."
@@ -67,9 +67,11 @@ function createProtectedDeleteTool({
 }
 
 function createFixedWriteTool({
-  getWorkspace
+  getWorkspace,
+  onIdentityFileChanged
 }: {
   getWorkspace: () => Workspace;
+  onIdentityFileChanged?: () => Promise<void>;
 }) {
   return tool({
     description:
@@ -79,7 +81,11 @@ function createFixedWriteTool({
       content: z.string()
     }),
     execute: async ({ path, content }) => {
+      const normalized = normalizeWorkspacePath(path);
       await getWorkspace().writeFile(path, content);
+      if (isCorePath(normalized)) {
+        await onIdentityFileChanged?.();
+      }
       return {
         path,
         bytesWritten: new TextEncoder().encode(content).byteLength
@@ -123,13 +129,14 @@ function createCopyTool({ getWorkspace }: { getWorkspace: () => Workspace }) {
 type SharedToolDeps = {
   getWorkspace: () => Workspace;
   setActivePlan: (plan: ActivePlan | null) => Promise<void>;
+  onIdentityFileChanged?: () => Promise<void>;
 };
 
 export function buildSharedToolSet(deps: SharedToolDeps): ToolSet {
-  const { getWorkspace, setActivePlan } = deps;
+  const { getWorkspace, setActivePlan, onIdentityFileChanged } = deps;
   return {
     read: createProtectedReadTool({ getWorkspace }),
-    write: createFixedWriteTool({ getWorkspace }),
+    write: createFixedWriteTool({ getWorkspace, onIdentityFileChanged }),
     edit: createProtectedEditTool({ getWorkspace }),
     delete: createProtectedDeleteTool({ getWorkspace }),
     move: createMoveTool({ getWorkspace }),
