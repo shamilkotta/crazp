@@ -1,0 +1,77 @@
+import { Think } from "@cloudflare/think";
+import { createBrowserTools } from "@cloudflare/think/tools/browser";
+import { createExecuteTool } from "@cloudflare/think/tools/execute";
+import { Workspace } from "@cloudflare/shell";
+import type { Session } from "agents/experimental/memory/session";
+import type { ToolSet, UIMessage } from "ai";
+
+import { buildSharedToolSet } from "../../../../src/agent/tool-registry";
+import type { ActivePlan } from "../../../../src/agent/tools/todo-write";
+
+const ACTIVE_PLAN_KEY = "active_plan";
+
+const WORKER_PROMPT = `You are a generic delegate worker for the parent agent. You are not a specialized role — the same worker handles any task the parent assigns (research, coding, planning, drafts, etc.). You have no chat history beyond the brief in the user message.
+
+Use browser tools, execute, file tools, and skills as needed. Write durable outputs under workspace/ when the brief calls for files. End with a clear, concise result the parent can relay to the user.
+
+You cannot spawn sub-agents. Do not ask clarifying questions — the brief must be enough.`;
+
+export class NexpWorker extends Think<Cloudflare.Env> {
+  override workspace = new Workspace({
+    sql: this.ctx.storage.sql,
+    r2: this.env.WORKSPACE_BUCKET,
+    name: () => this.name
+  });
+
+  override maxSteps = 250;
+
+  override getModel() {
+    return "@cf/moonshotai/kimi-k2.6";
+  }
+
+  override configureSession(session: Session) {
+    return session
+      .withContext("soul", {
+        provider: { get: async () => WORKER_PROMPT }
+      })
+      .withCachedPrompt();
+  }
+
+  override formatAgentToolInput(input: unknown): UIMessage {
+    const brief =
+      typeof input === "object" &&
+      input != null &&
+      "brief" in input &&
+      typeof (input as { brief: unknown }).brief === "string"
+        ? (input as { brief: string }).brief
+        : typeof input === "string"
+          ? input
+          : JSON.stringify(input, null, 2);
+    return {
+      id: crypto.randomUUID(),
+      role: "user",
+      parts: [{ type: "text", text: brief }]
+    };
+  }
+
+  override getTools(): ToolSet {
+    const browserTools = createBrowserTools({
+      ctx: this.ctx,
+      browser: this.env.BROWSER,
+      loader: this.env.LOADER
+    });
+    return {
+      ...browserTools,
+      execute: createExecuteTool(this),
+      ...buildSharedToolSet({
+        getWorkspace: () => this.workspace,
+        setActivePlan: (plan) => this.#setActivePlan(plan)
+      })
+    };
+  }
+
+  async #setActivePlan(plan: ActivePlan | null): Promise<void> {
+    if (plan == null) await this.ctx.storage.delete(ACTIVE_PLAN_KEY);
+    else await this.ctx.storage.put(ACTIVE_PLAN_KEY, plan);
+  }
+}
