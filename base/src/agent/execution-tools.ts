@@ -59,7 +59,11 @@ export function buildExecutionTools(
     ...browserTools,
     execute: createExecuteTool(executeAgent),
     execute_bundle: createExecuteBundleTool(env.LOADER),
-    ...buildSharedToolSet({ getWorkspace, setActivePlan, onIdentityFileChanged }),
+    ...buildSharedToolSet({
+      getWorkspace,
+      setActivePlan,
+      onIdentityFileChanged
+    }),
     // ...createThinkSandboxTools(env.SANDBOX), NOT IMPLEMENTED YET, SO USING CUSTOM TOOL BELOW
     ...createSandboxTools({
       sandbox: env.SANDBOX,

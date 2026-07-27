@@ -8,7 +8,7 @@ export type SkillEntry = {
   updatedAt: number;
 };
 
-const SKILLS_GLOB = "skills/*/SKILL.md";
+const SKILLS_GLOB = "skills/*.md";
 
 export async function listWorkspaceSkills(
   workspace: Workspace

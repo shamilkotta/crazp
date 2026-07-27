@@ -47,7 +47,9 @@ export class NexpAgent extends Think<Cloudflare.Env> {
 
   override configureSession(session: Session) {
     const identityProvider = (path: string) =>
-      workspaceContextProvider(this.workspace, path, () => session.refreshSystemPrompt());
+      workspaceContextProvider(this.workspace, path, () =>
+        session.refreshSystemPrompt()
+      );
     const compactFn = createCompactFunction({
       summarize: async (prompt) => {
         const result = await generateText({

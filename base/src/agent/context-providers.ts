@@ -6,7 +6,7 @@ import { coreFileMeta, resolveCoreFile } from "./core-files";
 export function workspaceContextProvider(
   workspace: Workspace,
   path: string,
-  onSet?: () => void | Promise<any>
+  onSet?: () => Promise<unknown>
 ): WritableContextProvider {
   const meta = coreFileMeta(path);
   if (!meta) {
