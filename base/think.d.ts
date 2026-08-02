@@ -4,8 +4,8 @@
 declare module "virtual:think/entry" {
   const entry: ExportedHandler<Cloudflare.Env>;
   export default entry;
-  export const ThinkAgent_Nexp: (typeof import("./agents/nexp/agent"))["NexpAgent"];
-  export const ThinkSubAgent_Nexp_Worker: (typeof import("./agents/nexp/agents/worker/agent"))["NexpWorker"];
+  export const ThinkAgent_Crazp: (typeof import("./agents/crazp/agent"))["CrazpAgent"];
+  export const ThinkSubAgent_Crazp_Worker: (typeof import("./agents/crazp/agents/worker/agent"))["CrazpWorker"];
 }
 declare module "virtual:think/router" {
   export const thinkRouter: import("@cloudflare/think/server-entry").ThinkRouter;
@@ -13,8 +13,8 @@ declare module "virtual:think/router" {
 
 declare namespace Cloudflare {
   interface Env {
-    ThinkAgent_Nexp: DurableObjectNamespace<
-      InstanceType<(typeof import("./agents/nexp/agent"))["NexpAgent"]>
+    ThinkAgent_Crazp: DurableObjectNamespace<
+      InstanceType<(typeof import("./agents/crazp/agent"))["CrazpAgent"]>
     >;
   }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "nexp",
+  "name": "crazp",
   "main": "src/worker-entry.ts",
   "compatibility_date": "2026-07-24",
   "compatibility_flags": ["nodejs_compat"],
@@ -8,7 +8,7 @@
   "r2_buckets": [
     {
       "binding": "WORKSPACE_BUCKET",
-      "bucket_name": "nexp-workspace"
+      "bucket_name": "crazp-workspace"
     }
   ],
   "browser": { "binding": "BROWSER", "remote": true },
@@ -24,8 +24,8 @@
   "durable_objects": {
     "bindings": [
       {
-        "class_name": "ThinkAgent_Nexp",
-        "name": "ThinkAgent_Nexp"
+        "class_name": "ThinkAgent_Crazp",
+        "name": "ThinkAgent_Crazp"
       },
       {
         "class_name": "Sandbox",
@@ -36,11 +36,11 @@
   "migrations": [
     {
       "tag": "v1",
-      "new_sqlite_classes": ["ThinkAgent_Nexp", "ThinkAgent_NexpChild"]
+      "new_sqlite_classes": ["ThinkAgent_Crazp", "ThinkAgent_CrazpChild"]
     },
     {
       "tag": "v2",
-      "deleted_classes": ["ThinkAgent_NexpChild"]
+      "deleted_classes": ["ThinkAgent_CrazpChild"]
     },
     {
       "tag": "v3",

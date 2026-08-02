@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Minimal terminal chat client for the Nexp Think agent.
+ * Minimal terminal chat client for the Crazp Think agent.
  * Usage: pnpm chat "Hello!"  or  pnpm chat (interactive)
  */
 
@@ -15,7 +15,7 @@ const PROMPT = (
       ? cliArgs.slice(1)
       : cliArgs
 ).join(" ");
-const AGENT = "nexp";
+const AGENT = "crazp";
 
 const wsUrl = BASE_URL.replace(/^http/, "ws") + `/agents/${AGENT}/${SESSION}`;
 

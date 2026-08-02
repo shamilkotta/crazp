@@ -15,5 +15,10 @@
       }
     ]
   },
-  "ignorePatterns": ["**/env.d.ts", "**/think.d.ts", "**/scripts/**", "**/dist/**"]
+  "ignorePatterns": [
+    "**/env.d.ts",
+    "**/think.d.ts",
+    "**/scripts/**",
+    "**/dist/**"
+  ]
 }

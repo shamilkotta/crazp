@@ -25,11 +25,11 @@ import { ACTIVE_PLAN_KEY, setActivePlan } from "../../src/agent/active-plan";
 import { listWorkspaceSkills } from "../../src/agent/skills-list";
 import { buildExecutionTools } from "../../src/agent/execution-tools";
 import type { ActivePlan } from "../../src/agent/tools/todo-write";
-import { NexpWorker } from "./agents/worker/agent";
+import { CrazpWorker } from "./agents/worker/agent";
 
-const BOOTSTRAP_SEEDED_KEY = "nexp:bootstrap-seeded";
+const BOOTSTRAP_SEEDED_KEY = "crazp:bootstrap-seeded";
 
-export class NexpAgent extends Think<Cloudflare.Env> {
+export class CrazpAgent extends Think<Cloudflare.Env> {
   override extensionLoader = this.env.LOADER;
 
   override workspace = new Workspace({
@@ -114,7 +114,7 @@ export class NexpAgent extends Think<Cloudflare.Env> {
         extensions: true,
         extensionManager: this.extensionManager
       }),
-      worker: agentTool(NexpWorker, {
+      worker: agentTool(CrazpWorker, {
         displayName: "Worker",
         description: `Hand off heavy work to a generic worker (same tools, isolated context). You decide each turn — there are no specialized sub-agents for research, code, etc.
 You may call worker multiple times in parallel when subtasks are independent.

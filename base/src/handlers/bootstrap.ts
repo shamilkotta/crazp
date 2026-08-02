@@ -1,5 +1,5 @@
 import { json } from "../http";
-import { getNexpAgentStub } from "../lib/agent-stub";
+import { getCrazpAgentStub } from "../lib/agent-stub";
 
 function isDevHost(url: URL): boolean {
   return url.hostname === "localhost" || url.hostname.endsWith(".localhost");
@@ -10,7 +10,7 @@ export async function handleBootstrapRequest(
   env: Cloudflare.Env
 ): Promise<Response> {
   const url = new URL(request.url);
-  const stub = await getNexpAgentStub(env);
+  const stub = await getCrazpAgentStub(env);
 
   if (url.pathname === "/api/bootstrap/start") {
     if (request.method !== "POST") {

@@ -12,7 +12,7 @@ Use browser tools, execute, file tools, and skills as needed. Write durable outp
 
 You cannot spawn sub-agents. Do not ask clarifying questions — the brief must be enough.`;
 
-export class NexpWorker extends Think<Cloudflare.Env> {
+export class CrazpWorker extends Think<Cloudflare.Env> {
   override workspace = new Workspace({
     sql: this.ctx.storage.sql,
     r2: this.env.WORKSPACE_BUCKET,

@@ -15,7 +15,7 @@ function messageText(parts: { type: string; text?: string }[]): string {
 }
 
 function Chat() {
-  const agent = useAgent({ agent: "nexp", name: SESSION });
+  const agent = useAgent({ agent: "crazp", name: SESSION });
   const {
     messages,
     sendMessage,
@@ -63,7 +63,7 @@ function Chat() {
   return (
     <div className="app">
       <header className="header">
-        <h1>Nexp</h1>
+        <h1>Crazp</h1>
         <span
           className={`status ${connectionError ? "error" : connected ? "connected" : ""}`}
         >
@@ -105,7 +105,7 @@ function Chat() {
         <textarea
           ref={inputRef}
           rows={1}
-          placeholder="Message Nexp…"
+          placeholder="Message Crazp…"
           disabled={!connected || busy}
           onInput={(e) => {
             e.currentTarget.style.height = "auto";

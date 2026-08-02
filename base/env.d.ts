@@ -5,13 +5,13 @@ interface __BaseEnv_Env {
   LOADER: WorkerLoader;
   BROWSER: BrowserRun;
   AI: Ai;
-  ThinkAgent_Nexp: DurableObjectNamespace /* ThinkAgent_Nexp */;
+  ThinkAgent_Crazp: DurableObjectNamespace /* ThinkAgent_Crazp */;
   SANDBOX: DurableObjectNamespace<import("./src/worker-entry").Sandbox>;
 }
 declare namespace Cloudflare {
   interface GlobalProps {
     mainModule: typeof import("./src/worker-entry");
-    durableNamespaces: "ThinkAgent_Nexp" | "Sandbox";
+    durableNamespaces: "ThinkAgent_Crazp" | "Sandbox";
   }
   interface Env extends __BaseEnv_Env {}
 }

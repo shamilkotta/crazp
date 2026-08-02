@@ -1,5 +1,5 @@
 {
-  "name": "@nexp/base",
+  "name": "@crazp/base",
   "description": "Headless Project Think personal agent on Cloudflare Workers",
   "private": true,
   "type": "module",

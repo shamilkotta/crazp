@@ -1,0 +1,50 @@
+{
+  "name": "crazp",
+  "description": "Filesystem first Cloudflare agent framework",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "crazp": "./dist/cli/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "modules.d.ts"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch --clear",
+    "typecheck": "tsc --noEmit",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "lint": "oxlint ."
+  },
+  "dependencies": {
+    "@cloudflare/sandbox": "^0.12.4",
+    "@cloudflare/shell": "latest",
+    "@cloudflare/think": "latest",
+    "@cloudflare/worker-bundler": "^0.2.2",
+    "agents": "latest",
+    "ai": "^7.0.0",
+    "ora": "^9.4.1",
+    "rolldown": "^1.2.0",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260702.1",
+    "@types/node": "^26.1.1",
+    "oxfmt": "^0.56.0",
+    "oxlint": "^1.71.0",
+    "tsdown": "^0.22.14",
+    "typescript": "^6.0.3"
+  }
+}

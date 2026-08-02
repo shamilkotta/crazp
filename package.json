@@ -1,5 +1,5 @@
 {
-  "name": "nexp-workspace",
+  "name": "crazp-workspace",
   "private": true,
   "type": "module",
   "version": "0.0.0",
@@ -13,11 +13,6 @@
     ]
   },
   "scripts": {
-    "dev": "pnpm --filter @nexp/base dev",
-    "build": "pnpm --filter @nexp/base build",
-    "deploy": "pnpm --filter @nexp/base deploy",
-    "chat": "pnpm --filter @nexp/base chat",
-    "types": "pnpm --filter @nexp/base types",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "lint": "oxlint .",

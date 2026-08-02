@@ -1,4 +1,4 @@
-# nexp
+# crazp
 
 pnpm monorepo for building agents on [Project Think](https://developers.cloudflare.com/agents/harnesses/think/) (`@cloudflare/think`).
 
@@ -6,8 +6,8 @@ pnpm monorepo for building agents on [Project Think](https://developers.cloudfla
 
 ```
 base/                 # Reference agent app (headless personal agent)
-packages/nexp/        # Agent setup framework (in development)
-examples/             # Example apps built on nexp
+packages/crazp/        # Agent setup framework (in development)
+examples/             # Example apps built on crazp
 ```
 
 ## Prerequisites
@@ -26,7 +26,7 @@ pnpm install
 Create the R2 bucket for the base agent (once):
 
 ```bash
-pnpm --filter @nexp/base exec wrangler r2 bucket create nexp-workspace
+pnpm --filter @crazp/base exec wrangler r2 bucket create crazp-workspace
 ```
 
 ## Development
@@ -58,14 +58,14 @@ pnpm deploy
 
 ## Scripts
 
-| Script            | Description                          |
-| ----------------- | ------------------------------------ |
-| `pnpm dev`        | Start base agent dev server          |
-| `pnpm chat`       | Terminal chat client for base agent  |
-| `pnpm deploy`     | Build and deploy base agent          |
-| `pnpm typecheck`  | Typecheck all workspace packages     |
-| `pnpm lint`       | Lint entire workspace                |
-| `pnpm format`     | Format entire workspace              |
-| `pnpm check`      | format:check + lint + typecheck      |
+| Script           | Description                         |
+| ---------------- | ----------------------------------- |
+| `pnpm dev`       | Start base agent dev server         |
+| `pnpm chat`      | Terminal chat client for base agent |
+| `pnpm deploy`    | Build and deploy base agent         |
+| `pnpm typecheck` | Typecheck all workspace packages    |
+| `pnpm lint`      | Lint entire workspace               |
+| `pnpm format`    | Format entire workspace             |
+| `pnpm check`     | format:check + lint + typecheck     |
 
 See [base/README.md](./base/README.md) for base agent API details and project layout.

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { json } from "../http";
-import { getNexpAgentStub } from "../lib/agent-stub";
+import { getCrazpAgentStub } from "../lib/agent-stub";
 
 const WriteRequestBodySchema = z.object({
   content: z.string()
@@ -38,7 +38,7 @@ export async function handleFilesRequest(
     return json({ error: "Not found" }, 404);
   }
 
-  const stub = await getNexpAgentStub(env);
+  const stub = await getCrazpAgentStub(env);
 
   if (path === "") {
     if (request.method !== "GET") {

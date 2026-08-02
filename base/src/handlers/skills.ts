@@ -1,5 +1,5 @@
 import { json } from "../http";
-import { getNexpAgentStub } from "../lib/agent-stub";
+import { getCrazpAgentStub } from "../lib/agent-stub";
 
 export async function handleSkillsRequest(
   request: Request,
@@ -8,7 +8,7 @@ export async function handleSkillsRequest(
   if (request.method !== "GET") {
     return json({ error: "Method not allowed" }, 405);
   }
-  const stub = await getNexpAgentStub(env);
+  const stub = await getCrazpAgentStub(env);
   const skills = await stub.listAgentSkills();
   return json({ skills });
 }

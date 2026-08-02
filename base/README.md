@@ -1,4 +1,4 @@
-# @nexp/base
+# @crazp/base
 
 Headless personal agent on [Project Think](https://developers.cloudflare.com/agents/harnesses/think/) (`@cloudflare/think`). Single durable general-purpose collaborator with continuously self-editable identity (soul, memory, user), Think-native skills, browser-based web research when needed, and optional delegation to one generic worker sub-agent.
 
@@ -20,7 +20,7 @@ No UI, no Alchemy — deploy with Wrangler only.
 ```bash
 # from repo root
 pnpm install
-pnpm --filter @nexp/base exec wrangler r2 bucket create nexp-workspace
+pnpm --filter @crazp/base exec wrangler r2 bucket create crazp-workspace
 ```
 
 ## Local development
@@ -54,7 +54,7 @@ curl -X POST http://localhost:5173/api/bootstrap/start
 | POST    | `/api/bootstrap/reset`             | Dev-only reset (localhost) |
 | GET     | `/health`                          | Health check               |
 
-WebSocket chat: `ws://localhost:5173/agents/nexp/default`
+WebSocket chat: `ws://localhost:5173/agents/crazp/default`
 
 ## Deploy
 
@@ -63,14 +63,14 @@ WebSocket chat: `ws://localhost:5173/agents/nexp/default`
 pnpm deploy
 ```
 
-Ensure `nexp-workspace` R2 bucket exists in your account.
+Ensure `crazp-workspace` R2 bucket exists in your account.
 
 ## Project layout
 
 ```
-agents/nexp/agent.ts              # NexpAgent (Think)
-agents/nexp/agents/worker/agent.ts # Generic worker sub-agent (agentTool)
-agents/nexp/skills/               # Bundled skills (agents:skills)
+agents/crazp/agent.ts              # CrazpAgent (Think)
+agents/crazp/agents/worker/agent.ts # Generic worker sub-agent (agentTool)
+agents/crazp/skills/               # Bundled skills (agents:skills)
 src/server.ts                     # REST API (Think entry fallthrough)
 src/agent/execution-tools.ts      # Execution ladder tool builder
 src/agent/tools/sandbox.ts        # Tier 4 sandbox tools
@@ -81,4 +81,4 @@ scripts/chat.mjs                  # Terminal chat client
 
 ## Bindings
 
-See [wrangler.jsonc](./wrangler.jsonc): `AI`, `WORKSPACE_BUCKET` (R2), `BROWSER`, `LOADER`, `SANDBOX` (container), `ThinkAgent_Nexp`.
+See [wrangler.jsonc](./wrangler.jsonc): `AI`, `WORKSPACE_BUCKET` (R2), `BROWSER`, `LOADER`, `SANDBOX` (container), `ThinkAgent_Crazp`.
