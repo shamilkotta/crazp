@@ -87,6 +87,9 @@ importers:
 
   examples/filesystem-first-agent:
     dependencies:
+      '@crazp/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       crazp:
         specifier: workspace:*
         version: link:../../packages/crazp
@@ -98,7 +101,7 @@ importers:
         specifier: ^4.105.0
         version: 4.114.0(@cloudflare/workers-types@4.20260702.1)
 
-  packages/crazp:
+  packages/core:
     dependencies:
       '@cloudflare/sandbox':
         specifier: ^0.12.4
@@ -118,6 +121,9 @@ importers:
       ai:
         specifier: ^7.0.0
         version: 7.0.37(zod@4.4.3)
+      crazp:
+        specifier: file:../crazp
+        version: link:../crazp
       ora:
         specifier: ^9.4.1
         version: 9.4.1
@@ -137,6 +143,28 @@ importers:
       '@types/node':
         specifier: ^26.1.1
         version: 26.1.1
+      oxfmt:
+        specifier: ^0.56.0
+        version: 0.56.0
+      oxlint:
+        specifier: ^1.71.0
+        version: 1.75.0
+      tsdown:
+        specifier: ^0.22.14
+        version: 0.22.14(typescript@6.0.3)
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
+  packages/crazp:
+    dependencies:
+      ai:
+        specifier: ^7.0.0
+        version: 7.0.37(zod@4.4.3)
+    devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^4.20260702.1
+        version: 4.20260702.1
       oxfmt:
         specifier: ^0.56.0
         version: 0.56.0

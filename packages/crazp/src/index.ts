@@ -7,7 +7,9 @@ export {
 
 export type {
   CrazpAgentConfig,
-  CrazpAgentManifest,
+  CrazpContext,
+  CrazpExecutionConfig,
+  CrazpModel,
   CrazpSubagentConfig,
-  CrazpContext
+  SkillManifestEntry
 } from "./types";
