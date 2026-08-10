@@ -122,7 +122,7 @@ importers:
         specifier: ^7.0.0
         version: 7.0.37(zod@4.4.3)
       crazp:
-        specifier: file:../crazp
+        specifier: workspace:*
         version: link:../crazp
       ora:
         specifier: ^9.4.1
