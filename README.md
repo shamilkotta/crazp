@@ -1,21 +1,65 @@
 # crazp
 
-pnpm monorepo for building agents on [Project Think](https://developers.cloudflare.com/agents/harnesses/think/) (`@cloudflare/think`).
+Filesystem first framework for building agents with minimal setup.
 
-## Workspace layout
+Crazp is inspired by [Vercel Eve](https://vercel.com/eve): an agent should feel like a directory you can understand, extend, and deploy. Instructions and skills live in Markdown, tools live in TypeScript, and configuration stays close to the agent.
 
+## Workspace Layout
+
+```txt
+packages/crazp/        # Public authoring API: define agents, tools, subagents, config
+packages/core/         # Build pipeline and CLI used by Crazp projects
+examples/              # Examples built with Crazp
+base/                  # Reference agent app used while building the framework
 ```
-base/                 # Reference agent app (headless personal agent)
-packages/crazp/        # Agent setup framework (in development)
-examples/             # Example apps built on crazp
+
+`base/` is intentionally different from the framework packages. It is a running reference agent built on Cloudflare Think, and it helped shape the framework while Crazp was being developed. See [`base/README.md`](./base/README.md) for its runtime specific setup.
+
+## Agent Shape
+
+A Crazp project is organized around an `agent/` directory:
+
+```txt
+agent/
+  instructions.md
+  agent.ts
+  tools/
+    echo.ts
+  skills/
+    research/SKILL.md
+  subagents/
+    helper/
+      agent.ts
+      instructions.md
 ```
 
-## Prerequisites
+The framework reads that filesystem shape and turns it into an agent project. Use Markdown for behavior, TypeScript for tools, and `agent.ts` when you need to configure the model, step limit, skills, execution, or subagents.
 
-- Node.js 18+
-- pnpm
-- Cloudflare account with Workers AI, R2, Browser Rendering, Durable Objects, Worker Loaders, and **Containers** (for sandbox) enabled
-- Docker running locally for sandbox container builds during `pnpm dev` / deploy
+## Packages
+
+### `crazp`
+
+Public package for authoring agents:
+
+- `defineAgent`
+- `defineTool`
+- `defineSubagent`
+- `defineCrazpConfig`
+- `crazp:ctx` type declarations through `crazp/modules`
+
+See [`packages/crazp/README.md`](./packages/crazp/README.md) for package details.
+
+### `@crazp/core`
+
+Internal framework implementation and build pipeline. It provides the `crazp` CLI used by examples and apps:
+
+```bash
+pnpm --filter @crazp/example-filesystem-first-agent build
+```
+
+## Examples
+
+[`examples/filesystem-first-agent`](./examples/filesystem-first-agent) shows the intended project layout: one main agent, a tool, a skill, and a helper subagent.
 
 ## Setup
 
@@ -23,49 +67,30 @@ examples/             # Example apps built on crazp
 pnpm install
 ```
 
-Create the R2 bucket for the base agent (once):
-
-```bash
-pnpm --filter @crazp/base exec wrangler r2 bucket create crazp-workspace
-```
-
 ## Development
 
-Run the base agent locally:
+Run workspace checks:
 
 ```bash
-pnpm dev
+pnpm check
 ```
 
-In another terminal:
+Build the public authoring package:
 
 ```bash
-pnpm chat "Hello!"
-# or interactive: pnpm chat
+pnpm --filter crazp build
 ```
 
-Bootstrap first-run onboarding:
+Build the filesystem first example:
 
 ```bash
-curl -X POST http://localhost:5173/api/bootstrap/start
-```
-
-## Deploy
-
-```bash
-pnpm deploy
+pnpm --filter @crazp/example-filesystem-first-agent build
 ```
 
 ## Scripts
 
-| Script           | Description                         |
-| ---------------- | ----------------------------------- |
-| `pnpm dev`       | Start base agent dev server         |
-| `pnpm chat`      | Terminal chat client for base agent |
-| `pnpm deploy`    | Build and deploy base agent         |
-| `pnpm typecheck` | Typecheck all workspace packages    |
-| `pnpm lint`      | Lint entire workspace               |
-| `pnpm format`    | Format entire workspace             |
-| `pnpm check`     | format:check + lint + typecheck     |
-
-See [base/README.md](./base/README.md) for base agent API details and project layout.
+- `pnpm format` formats the workspace with `oxfmt`.
+- `pnpm format:check` checks formatting.
+- `pnpm lint` lints the workspace with `oxlint`.
+- `pnpm typecheck` typechecks all workspace packages.
+- `pnpm check` runs format check, lint, and typecheck.

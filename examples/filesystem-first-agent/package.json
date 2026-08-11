@@ -3,15 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "crazp build",
-    "deploy": "pnpm build && wrangler deploy --config dist/wrangler.json"
+    "build": "crazp build"
   },
   "dependencies": {
     "@crazp/core": "workspace:*",
     "crazp": "workspace:*",
     "zod": "^4.4.3"
-  },
-  "devDependencies": {
-    "wrangler": "^4.105.0"
   }
 }

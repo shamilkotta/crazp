@@ -2,7 +2,7 @@ import { defineAgent } from "crazp";
 
 export default defineAgent({
   name: "crazp",
-  model: "@cf/moonshotai/kimi-k2.6",
+  model: "openai/gpt-5.4",
   maxSteps: 250,
   chatRecovery: true,
   extensions: true,
