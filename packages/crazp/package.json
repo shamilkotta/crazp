@@ -1,23 +1,49 @@
 {
   "name": "crazp",
-  "description": "Filesystem first Cloudflare agent framework",
-  "version": "0.0.0",
+  "description": "Filesystem first agent framework",
+  "version": "0.0.1",
+  "license": "MIT",
   "type": "module",
+  "homepage": "https://github.com/shamilkotta/crazp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shamilkotta/crazp.git",
+    "directory": "packages/crazp"
+  },
+  "bugs": {
+    "url": "https://github.com/shamilkotta/crazp/issues"
+  },
+  "keywords": [
+    "agents",
+    "ai",
+    "framework",
+    "filesystem first"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./modules": {
+      "types": "./modules.d.ts"
     }
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
+    "README.md",
+    "LICENSE",
     "dist",
     "modules.d.ts"
   ],
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch --clear",
+    "prepublishOnly": "pnpm run build",
     "typecheck": "tsc --noEmit",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
@@ -27,7 +53,7 @@
     "ai": "^7.0.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260702.1",
+    "@cloudflare/workers-types": "^5.20260810.1",
     "oxfmt": "^0.56.0",
     "oxlint": "^1.71.0",
     "tsdown": "^0.22.14",

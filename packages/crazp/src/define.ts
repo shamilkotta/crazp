@@ -1,8 +1,5 @@
 import { tool } from "ai";
-import type {
-  CrazpAgentConfig,
-  CrazpSubagentConfig
-} from "./types";
+import type { CrazpAgentConfig, CrazpSubagentConfig } from "./types";
 
 export function defineAgent<const Config extends CrazpAgentConfig>(
   config: Config
