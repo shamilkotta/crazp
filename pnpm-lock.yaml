@@ -96,6 +96,10 @@ importers:
       zod:
         specifier: ^4.4.3
         version: 4.4.3
+    devDependencies:
+      wrangler:
+        specifier: ^4.114.0
+        version: 4.114.0(@cloudflare/workers-types@5.20260810.1)
 
   packages/core:
     dependencies:
@@ -120,12 +124,12 @@ importers:
       crazp:
         specifier: workspace:*
         version: link:../crazp
+      esbuild:
+        specifier: ^0.28.1
+        version: 0.28.1
       ora:
         specifier: ^9.4.1
         version: 9.4.1
-      rolldown:
-        specifier: ^1.2.0
-        version: 1.2.0
       yaml:
         specifier: ^2.9.0
         version: 2.9.0
@@ -6220,6 +6224,23 @@ snapshots:
       workerd: 1.20260722.1
     optionalDependencies:
       '@cloudflare/workers-types': 4.20260702.1
+      fsevents: 2.3.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  wrangler@4.114.0(@cloudflare/workers-types@5.20260810.1):
+    dependencies:
+      '@cloudflare/kv-asset-handler': 0.5.0
+      '@cloudflare/unenv-preset': 2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260722.1)
+      blake3-wasm: 2.1.5
+      esbuild: 0.28.1
+      miniflare: 4.20260722.0
+      path-to-regexp: 6.3.0
+      unenv: 2.0.0-rc.24
+      workerd: 1.20260722.1
+    optionalDependencies:
+      '@cloudflare/workers-types': 5.20260810.1
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
