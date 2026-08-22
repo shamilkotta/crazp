@@ -210,3 +210,5 @@ Pass a self contained brief. Use each worker's returned summary in your reply to
     return listWorkspaceSkills(this.workspace);
   }
 }
+
+Object.defineProperty(CrazpAgent, "name", { value: "ThinkAgent_Crazp" });

@@ -28,6 +28,10 @@
         "name": "ThinkAgent_Crazp"
       },
       {
+        "class_name": "ThinkAgent_Crazp",
+        "name": "crazp"
+      },
+      {
         "class_name": "Sandbox",
         "name": "SANDBOX"
       }

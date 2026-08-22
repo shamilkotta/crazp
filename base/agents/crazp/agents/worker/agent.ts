@@ -61,3 +61,7 @@ export class CrazpWorker extends Think<Cloudflare.Env> {
     });
   }
 }
+
+Object.defineProperty(CrazpWorker, "name", {
+  value: "ThinkSubAgent_Crazp_Worker"
+});

@@ -1,8 +1,8 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
-import { think } from "@cloudflare/think/vite";
+import agents from "agents/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [react(), think({ allowNonVirtualMain: true }), cloudflare()]
+  plugins: [react(), agents(), cloudflare()]
 });

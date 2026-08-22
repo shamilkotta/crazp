@@ -6,6 +6,7 @@ interface __BaseEnv_Env {
   BROWSER: BrowserRun;
   AI: Ai;
   ThinkAgent_Crazp: DurableObjectNamespace /* ThinkAgent_Crazp */;
+  crazp: DurableObjectNamespace /* ThinkAgent_Crazp */;
   SANDBOX: DurableObjectNamespace<import("./src/worker-entry").Sandbox>;
 }
 declare namespace Cloudflare {
