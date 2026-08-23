@@ -5,7 +5,7 @@ import { createRoot } from "react-dom/client";
 
 import "./client.css";
 
-const SESSION = "default";
+const SESSION = "main";
 
 function messageText(parts: { type: string; text?: string }[]): string {
   return parts

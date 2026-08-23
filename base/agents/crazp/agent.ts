@@ -26,6 +26,7 @@ import { listWorkspaceSkills } from "../../src/agent/skills-list";
 import { buildExecutionTools } from "../../src/agent/execution-tools";
 import type { ActivePlan } from "../../src/agent/tools/todo-write";
 import { CrazpWorker } from "./agents/worker/agent";
+import { skillsR2Prefix, workspaceR2Name } from "../../src/agent/r2-keys";
 
 const BOOTSTRAP_SEEDED_KEY = "crazp:bootstrap-seeded";
 
@@ -35,7 +36,7 @@ export class CrazpAgent extends Think<Cloudflare.Env> {
   override workspace = new Workspace({
     sql: this.ctx.storage.sql,
     r2: this.env.WORKSPACE_BUCKET,
-    name: () => this.name
+    name: () => workspaceR2Name(this.env, this.name)
   });
 
   override maxSteps = 250;
@@ -95,7 +96,9 @@ export class CrazpAgent extends Think<Cloudflare.Env> {
   override getSkills() {
     return [
       bundledSkills,
-      skills.r2(this.env.WORKSPACE_BUCKET, { prefix: "skills/" })
+      skills.r2(this.env.WORKSPACE_BUCKET, {
+        prefix: skillsR2Prefix(this.env, this.name)
+      })
     ];
   }
 

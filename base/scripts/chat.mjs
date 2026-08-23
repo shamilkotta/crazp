@@ -7,7 +7,7 @@
 const BASE_URL = process.env.AGENT_URL ?? "http://localhost:5173";
 const cliArgs = process.argv.slice(2);
 const SESSION =
-  process.env.AGENT_SESSION ?? (cliArgs.length > 1 ? cliArgs[0] : "default");
+  process.env.AGENT_SESSION ?? (cliArgs.length > 1 ? cliArgs[0] : "main");
 const PROMPT = (
   process.env.AGENT_SESSION
     ? cliArgs

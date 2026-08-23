@@ -5,6 +5,7 @@ import type { ToolSet, UIMessage } from "ai";
 
 import { setActivePlan } from "../../../../src/agent/active-plan";
 import { buildExecutionTools } from "../../../../src/agent/execution-tools";
+import { workspaceR2Name } from "../../../../src/agent/r2-keys";
 
 const WORKER_PROMPT = `You are a generic delegate worker for the parent agent. You are not a specialized role — the same worker handles any task the parent assigns (research, coding, planning, drafts, etc.). You have no chat history beyond the brief in the user message.
 
@@ -16,7 +17,7 @@ export class CrazpWorker extends Think<Cloudflare.Env> {
   override workspace = new Workspace({
     sql: this.ctx.storage.sql,
     r2: this.env.WORKSPACE_BUCKET,
-    name: () => this.name
+    name: () => workspaceR2Name(this.env, this.name)
   });
 
   override maxSteps = 250;

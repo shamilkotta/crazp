@@ -2,6 +2,7 @@
 // so existing deployments keep their SQLite data.
 declare namespace Cloudflare {
   interface Env {
+    CRAZP_WORKER_NAME?: string;
     ThinkAgent_Crazp: DurableObjectNamespace<
       InstanceType<(typeof import("./agents/crazp/agent"))["CrazpAgent"]>
     >;

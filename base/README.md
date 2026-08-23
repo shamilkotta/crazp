@@ -54,7 +54,7 @@ curl -X POST http://localhost:5173/api/bootstrap/start
 | POST    | `/api/bootstrap/reset`             | Dev-only reset (localhost) |
 | GET     | `/health`                          | Health check               |
 
-WebSocket chat: `ws://localhost:5173/agents/crazp/default`
+WebSocket chat: `ws://localhost:5173/agents/crazp/main`
 
 ## Deploy
 

@@ -13,6 +13,9 @@
   ],
   "browser": { "binding": "BROWSER", "remote": true },
   "worker_loaders": [{ "binding": "LOADER" }],
+  "vars": {
+    "CRAZP_WORKER_NAME": "crazp"
+  },
   "containers": [
     {
       "class_name": "Sandbox",
