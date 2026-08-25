@@ -20,7 +20,8 @@ export type CrazpContext = {
 };
 
 export type CrazpSubagentConfig = {
-  displayName: string;
+  name: string;
+  slug?: string;
   description: string;
   model?: CrazpModel;
   maxSteps?: number;
@@ -38,6 +39,7 @@ export type CrazpExecutionConfig = {
 
 export type CrazpAgentConfig = {
   name?: string;
+  slug?: string;
   model?: CrazpModel;
   maxSteps?: number;
   chatRecovery?: boolean;
