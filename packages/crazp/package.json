@@ -1,7 +1,7 @@
 {
   "name": "crazp",
   "description": "Filesystem first agent framework",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/shamilkotta/crazp#readme",
