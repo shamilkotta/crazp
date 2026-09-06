@@ -28,6 +28,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./channels": {
+      "types": "./dist/channels/index.d.ts",
+      "import": "./dist/channels/index.js"
+    },
     "./modules": {
       "types": "./modules.d.ts"
     }
@@ -50,9 +54,64 @@
     "lint": "oxlint ."
   },
   "dependencies": {
-    "ai": "^7.0.0"
+    "ai": "^7.0.0",
+    "@cloudflare/think": "^0.16.0"
+  },
+  "peerDependencies": {
+    "@chat-adapter/discord": "^4.31.0",
+    "@chat-adapter/gchat": "^4.31.0",
+    "@chat-adapter/github": "^4.31.0",
+    "@chat-adapter/linear": "^4.31.0",
+    "@chat-adapter/slack": "^4.31.0",
+    "@chat-adapter/teams": "^4.31.0",
+    "@chat-adapter/telegram": "^4.31.0",
+    "@chat-adapter/twilio": "^4.31.0",
+    "@chat-adapter/whatsapp": "^4.31.0",
+    "@chat-adapter/x": "^4.31.0"
+  },
+  "peerDependenciesMeta": {
+    "@chat-adapter/discord": {
+      "optional": true
+    },
+    "@chat-adapter/gchat": {
+      "optional": true
+    },
+    "@chat-adapter/github": {
+      "optional": true
+    },
+    "@chat-adapter/linear": {
+      "optional": true
+    },
+    "@chat-adapter/slack": {
+      "optional": true
+    },
+    "@chat-adapter/teams": {
+      "optional": true
+    },
+    "@chat-adapter/telegram": {
+      "optional": true
+    },
+    "@chat-adapter/twilio": {
+      "optional": true
+    },
+    "@chat-adapter/whatsapp": {
+      "optional": true
+    },
+    "@chat-adapter/x": {
+      "optional": true
+    }
   },
   "devDependencies": {
+    "@chat-adapter/discord": "^4.39.0",
+    "@chat-adapter/gchat": "^4.39.0",
+    "@chat-adapter/github": "^4.39.0",
+    "@chat-adapter/linear": "^4.39.0",
+    "@chat-adapter/slack": "^4.39.0",
+    "@chat-adapter/teams": "^4.39.0",
+    "@chat-adapter/telegram": "^4.39.0",
+    "@chat-adapter/twilio": "^4.39.0",
+    "@chat-adapter/whatsapp": "^4.39.0",
+    "@chat-adapter/x": "^4.39.0",
     "@cloudflare/workers-types": "^5.20260810.1",
     "oxfmt": "^0.56.0",
     "oxlint": "^1.71.0",

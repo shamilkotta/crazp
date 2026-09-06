@@ -8,16 +8,14 @@ export type SkillManifestEntry = {
   [key: string]: unknown;
 };
 
-export type CrazpModel =
-  | string
-  | ((ctx: { env: unknown; agentName: string }) => string);
-
 export type CrazpContext = {
-  env: unknown;
-  ctx: DurableObjectState;
-  workspace: unknown;
+  env: Record<string, unknown>;
   agentName: string;
 };
+
+export type CrazpModel =
+  | string
+  | ((ctx: Pick<CrazpContext, "env" | "agentName">) => string);
 
 export type CrazpSubagentConfig = {
   name: string;
@@ -31,9 +29,12 @@ export type CrazpSubagentConfig = {
 
 export type CrazpExecutionConfig = {
   workspaceTools?: boolean;
-  execute?: boolean;
-  executeBundle?: boolean;
+  container?: boolean;
   browser?: boolean;
+  /** @deprecated Prefer container / sandbox flags used by the runtime. */
+  execute?: boolean;
+  /** @deprecated Prefer container / sandbox flags used by the runtime. */
+  executeBundle?: boolean;
   sandbox?: boolean;
 };
 
