@@ -1,4 +1,3 @@
-import ctx from "crazp:ctx";
 import { defineTool } from "crazp";
 import { z } from "zod";
 
@@ -9,8 +8,7 @@ export default defineTool({
   }),
   execute: async ({ message }) => {
     return {
-      message,
-      agentName: ctx.agentName
+      message
     };
   }
 });

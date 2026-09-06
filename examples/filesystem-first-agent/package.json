@@ -7,6 +7,8 @@
     "deploy": "wrangler deploy --config .crazp/output/wrangler.json"
   },
   "dependencies": {
+    "@chat-adapter/telegram": "^4.39.0",
+    "@cloudflare/think": "^0.16.0",
     "@crazp/core": "workspace:*",
     "crazp": "workspace:*",
     "zod": "^4.5.2"
